@@ -40,6 +40,10 @@ def softmax_loss_naive(W, X, y, reg):
 
         loss -= logp[y[i]]  # negative log probability is the loss
 
+        # Gradient of the softmax loss with respect to the scores.
+        dW[:, :] += np.outer(X[i], p)
+        dW[:, y[i]] -= X[i]
+
 
     # normalized hinge loss plus regularization
     loss = loss / num_train + reg * np.sum(W * W)
@@ -51,6 +55,11 @@ def softmax_loss_naive(W, X, y, reg):
     # it may be simpler to compute the derivative at the same time that the     #
     # loss is being computed. As a result you may need to modify some of the    #
     # code above to compute the gradient.                                       #
+    #############################################################################
+    dW /= num_train
+    dW += 2 * reg * W
+    #############################################################################
+    #                          END OF YOUR CODE                                 #
     #############################################################################
 
 
@@ -73,6 +82,16 @@ def softmax_loss_vectorized(W, X, y, reg):
     # Implement a vectorized version of the softmax loss, storing the           #
     # result in loss.                                                           #
     #############################################################################
+    num_train = X.shape[0]
+    scores = X.dot(W)
+    scores -= np.max(scores, axis=1, keepdims=True)
+    exp_scores = np.exp(scores)
+    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
+    loss = -np.sum(np.log(probs[np.arange(num_train), y])) / num_train
+    loss += reg * np.sum(W * W)
+    #############################################################################
+    #                          END OF YOUR CODE                                 #
+    #############################################################################
 
 
     #############################################################################
@@ -83,6 +102,12 @@ def softmax_loss_vectorized(W, X, y, reg):
     # Hint: Instead of computing the gradient from scratch, it may be easier    #
     # to reuse some of the intermediate values that you used to compute the     #
     # loss.                                                                     #
+    #############################################################################
+    dscores = probs.copy()
+    dscores[np.arange(num_train), y] -= 1
+    dW = X.T.dot(dscores) / num_train + 2 * reg * W
+    #############################################################################
+    #                          END OF YOUR CODE                                 #
     #############################################################################
 
 
