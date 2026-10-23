@@ -87,9 +87,9 @@ The notebooks write trained models into `cs231n/saved/`:
 - `best_softmax_features.npy`
 - `best_two_layer_net_features.npy`
 
-Include those files if you want the trained weights in the repository. The
-`.gitignore` already excludes CIFAR-10 and temporary archives, but it does not
-exclude `.npy` model files.
+The model files from the recorded Kaggle run are committed in the repository.
+The `.gitignore` excludes CIFAR-10 and temporary archives, but not `.npy` model
+files.
 
 ## 6. Common issues
 

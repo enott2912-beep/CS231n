@@ -14,6 +14,22 @@ implementation of fully connected neural networks.
 | Q4: Image features | `features.ipynb` | Uses the Softmax and `TwoLayerNet` implementations above |
 | Q5: Fully connected network | `FullyConnectedNets.ipynb` | `cs231n/classifiers/fc_net.py`, `cs231n/optim.py` |
 
+## Results
+
+| Question | Model | Result |
+| --- | --- | --- |
+| Q1 | k-nearest neighbors | **28.2% test accuracy** |
+| Q2 | Softmax on raw pixels | **37.4% validation / 36.3% test accuracy** |
+| Q3 | Two-layer neural network | **52.1% validation / 48.2% test accuracy** |
+| Q4 | Softmax on HOG/color features | **43.6% validation / 42.0% test accuracy** |
+| Q4 | Two-layer network on HOG/color features | **62.5% validation / 59.3% test accuracy** |
+| Q5 | Fully connected network | **52.5% validation / 52.0% test accuracy** |
+
+The three-layer overfitting cell in `FullyConnectedNets.ipynb` was later tuned
+from `weight_scale=1e-2` to `weight_scale=5e-2`; its output should be refreshed
+by rerunning that cell. The final Q5 model results above are from the recorded
+Kaggle run.
+
 ## What is implemented
 
 ### Q1 — k-Nearest Neighbor

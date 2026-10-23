@@ -42,7 +42,7 @@ CS231n/
 
 | Assignment | Topics | Status |
 | --- | --- | --- |
-| Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Code complete; notebooks to be executed on Kaggle |
+| Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Complete; executed on Kaggle |
 | Assignment 2 | Batch normalization, dropout, convolutional networks | Planned |
 | Assignment 3 | Image captioning / detection / segmentation | Planned |
 | Final project | Open-ended computer-vision project | Planned |
@@ -73,15 +73,16 @@ For a step-by-step Kaggle workflow, see
 The notebooks are executed on Kaggle and the resulting outputs are committed
 back to this repository. The target accuracies from the assignment are:
 
-| Question | Model | Target |
-| --- | --- | --- |
-| Q1 | k-nearest neighbors | ~28% test accuracy |
-| Q2 | Softmax on raw pixels | >36% validation accuracy |
-| Q3 | Two-layer neural network | >48% validation/test accuracy |
-| Q4 | Softmax + two-layer network on HOG/color features | >42% validation, >55% test accuracy |
-| Q5 | Fully connected network | >=50% validation/test accuracy |
+| Question | Model | Target | Result |
+| --- | --- | --- | --- |
+| Q1 | k-nearest neighbors | ~28% test accuracy | **28.2% test** |
+| Q2 | Softmax on raw pixels | >36% validation accuracy | **37.4% val / 36.3% test** |
+| Q3 | Two-layer neural network | >48% validation/test accuracy | **52.1% val / 48.2% test** |
+| Q4 | Softmax on HOG/color features | >42% validation accuracy | **43.6% val / 42.0% test** |
+| Q4 | Two-layer network on HOG/color features | >55% test accuracy | **62.5% val / 59.3% test** |
+| Q5 | Fully connected network | >=50% validation/test accuracy | **52.5% val / 52.0% test** |
 
-Actual results will be added after the Kaggle run.
+The executed notebooks and trained model files are committed in `assignment1/`.
 
 ## Notes
 
