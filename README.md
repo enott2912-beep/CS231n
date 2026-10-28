@@ -35,6 +35,15 @@ CS231n/
 │   ├── two_layer_net.ipynb
 │   ├── features.ipynb
 │   └── FullyConnectedNets.ipynb
+├── assignment2/
+│   ├── README.md
+│   ├── KAGGLE.md
+│   ├── cs231n/
+│   ├── BatchNormalization.ipynb
+│   ├── Dropout.ipynb
+│   ├── ConvolutionalNetworks.ipynb
+│   ├── PyTorch.ipynb
+│   └── RNN_Captioning_pytorch.ipynb
 └── final_project/          # added in the final part of the course
 ```
 
@@ -43,7 +52,7 @@ CS231n/
 | Assignment | Topics | Status |
 | --- | --- | --- |
 | Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Complete; executed on Kaggle |
-| Assignment 2 | Batch normalization, dropout, convolutional networks | Planned |
+| Assignment 2 | Batch/layer normalization, dropout, convolutional networks, PyTorch, RNN captioning | Code complete; notebooks to be executed on Kaggle |
 | Assignment 3 | Image captioning / detection / segmentation | Planned |
 | Final project | Open-ended computer-vision project | Planned |
 
@@ -57,16 +66,22 @@ cd assignment1
 uv run jupyter lab
 ```
 
-The notebook setup cells use `cs231n/datasets/cifar-10-batches-py` for CIFAR-10.
-The dataset is not committed to this repository. You can either:
+Assignment 2 uses the same environment and adds PyTorch, torchvision, `h5py`
+and Cython for the fast convolution and RNN exercises.
 
-- run `bash cs231n/datasets/get_datasets.sh` from `assignment1/cs231n/datasets`, or
-- mount a CIFAR-10 dataset in the execution environment; the setup cells will
-  look for a `cifar-10-batches-py` directory under `/kaggle/input` and link it
-  automatically.
+The notebook setup cells use `cs231n/datasets/cifar-10-batches-py` for CIFAR-10
+and `cs231n/datasets/coco_captioning` for the RNN captioning data. The datasets
+are not committed to this repository. You can either:
 
-For a step-by-step Kaggle workflow, see
-[assignment1/KAGGLE.md](assignment1/KAGGLE.md).
+- run the course download scripts from the assignment's `cs231n/datasets`
+  directory, or
+- mount the datasets in the execution environment; the setup cells look for a
+  `cifar-10-batches-py` directory (or `coco2014_captions.h5`) under
+  `/kaggle/input` and link it automatically.
+
+For step-by-step Kaggle workflows, see
+[assignment1/KAGGLE.md](assignment1/KAGGLE.md) and
+[assignment2/KAGGLE.md](assignment2/KAGGLE.md).
 
 ## Assignment 1 results
 
@@ -84,14 +99,33 @@ back to this repository. The target accuracies from the assignment are:
 
 The executed notebooks and trained model files are committed in `assignment1/`.
 
+## Assignment 2
+
+Assignment 2 implements the layer primitives and training code directly, then
+moves to PyTorch and recurrent networks:
+
+- batch normalization, layer normalization, dropout, and spatial group
+  normalization;
+- naive convolution and max-pooling forward/backward passes;
+- `FullyConnectedNet` with normalization and dropout options;
+- `ThreeLayerConvNet`;
+- PyTorch exercises on CIFAR-10, including an open-ended ResNet-style model;
+- an RNN/LSTM image-captioning model on COCO.
+
+The required targets are at least **70% CIFAR-10 validation accuracy** for the
+open-ended PyTorch model and a final overfit loss below **0.1** for the RNN
+captioning model. The notebooks are implemented and ready to run on Kaggle; the
+executed outputs and measured accuracies will be added after that run.
+
 ## Notes
 
-- Assignment 1 code is complete. Assignment 2 layers (batch/layer
-  normalization, dropout, convolution, pooling, group normalization) are left
-  as starter stubs and are intentionally out of scope for this assignment.
-- `solver.py`, `layer_utils.py`, `gradient_check.py`, `features.py`,
-  `data_utils.py`, and `vis_utils.py` are course-provided utilities.
-- Trained models are saved by the notebooks in `assignment1/cs231n/saved/`.
+- Assignment 1 and Assignment 2 code are complete.
+- `solver.py`, `layer_utils.py`, `fast_layers.py`, `gradient_check.py`,
+  `data_utils.py`, `coco_utils.py`, and `vis_utils.py` are course-provided
+  utilities.
+- Trained Assignment 1 models are saved in `assignment1/cs231n/saved/`.
+- Assignment 2 notebooks intentionally start without outputs until they are
+  executed on Kaggle.
 
 ## Attribution
 
