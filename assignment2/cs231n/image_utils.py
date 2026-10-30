@@ -57,23 +57,31 @@ def deprocess_image(img, rescale=False):
     return np.clip(255 * img, 0.0, 255.0).astype(np.uint8)
 
 
-def image_from_url(url):
+def image_from_url(url, timeout=10):
     """
-    Read an image from a URL. Returns a numpy array with the pixel data.
-    We write the image to a temporary file then read it back. Kinda gross.
+    Read an image from a URL. Returns a numpy array with the pixel data, or None
+    if the image could not be downloaded or decoded. We write the image to a
+    temporary file then read it back. Kinda gross.
     """
+    fname = None
     try:
-        f = urllib.request.urlopen(url)
-        _, fname = tempfile.mkstemp()
+        with urllib.request.urlopen(url, timeout=timeout) as response:
+            data = response.read()
+        fd, fname = tempfile.mkstemp(suffix=".jpg")
+        os.close(fd)
         with open(fname, "wb") as ff:
-            ff.write(f.read())
-        img = imread(fname)
-        os.remove(fname)
-        return img
-    except urllib.error.URLError as e:
-        print("URL Error: ", e.reason, url)
+            ff.write(data)
+        return imread(fname)
     except urllib.error.HTTPError as e:
         print("HTTP Error: ", e.code, url)
+    except urllib.error.URLError as e:
+        print("URL Error: ", e.reason, url)
+    except Exception as e:
+        print("Could not load image:", url, e)
+    finally:
+        if fname is not None and os.path.exists(fname):
+            os.remove(fname)
+    return None
 
 
 def load_image(filename, size=None):

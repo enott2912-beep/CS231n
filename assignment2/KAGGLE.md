@@ -119,5 +119,10 @@ Assignment 2 does not write trained model files to `cs231n/saved/`.
 - **Cython build fails** — the notebook continues with the fallback
   implementation; install `Cython` and rerun the build cell to use the faster
   path.
+- **`TypeError: Image data of dtype object cannot be converted to float`** — an
+  image URL was unreachable, so `image_from_url` returned `None`. This only
+  affects the COCO visualization cells, not the training or grading checks;
+  those cells now skip missing images. Enable Internet if you want to see the
+  samples.
 - **CUDA out of memory in the open-ended PyTorch section** — reduce the batch
   size in the augmented `DataLoader` in `PyTorch.ipynb`.
