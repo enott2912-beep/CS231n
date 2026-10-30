@@ -63,14 +63,30 @@ image captioning.
 
 ## Results
 
-The notebooks are ready to run on Kaggle. The executed outputs, measured
-accuracies, and any final hyperparameter adjustments will be committed after
-the Kaggle run. The required targets are:
+The downloaded Kaggle executions were checked on 2026-10-30. All notebooks
+parse correctly and contain no execution-error outputs. The numerical checks
+for the implemented layers and models also pass with small relative errors.
+
+| Question | Observed result | Status |
+| --- | --- | --- |
+| Q1: Batch/layer normalization | Forward/backward checks pass; best shown validation accuracy is 34.5% | Passed |
+| Q2: Dropout | Forward/backward checks pass; best shown validation accuracy is 35.4% | Passed |
+| Q3: Convolutional networks | Naive/fast layer checks pass; small-data train accuracy reaches 82% | Passed |
+| Q4: Open-ended PyTorch model | 83.0% validation accuracy; 80.5% test accuracy | Passed |
+| Q5: RNN captioning | Small-data final loss is 0.0134 | Passed |
+
+The required targets are:
 
 | Question | Target |
 | --- | --- |
 | Q4 open-ended PyTorch model | >=70% CIFAR-10 validation accuracy in 10 epochs |
 | Q5 RNN overfit experiment | final training loss < 0.1 |
+
+The Q4 and Q5 targets are met by the executed results above. Q1–Q3 are
+validated by the assignment's gradient and consistency checks; their small
+training demonstrations are not intended as final benchmark scores. The RNN
+visualization section reports a few HTTP 404/410 errors for unavailable Flickr
+images, but those warnings do not affect the numerical checks or training.
 
 ## Running the notebooks
 
