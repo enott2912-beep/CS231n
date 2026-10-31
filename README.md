@@ -114,18 +114,24 @@ moves to PyTorch and recurrent networks:
 
 The required targets are at least **70% CIFAR-10 validation accuracy** for the
 open-ended PyTorch model and a final overfit loss below **0.1** for the RNN
-captioning model. The notebooks are implemented and ready to run on Kaggle; the
-executed outputs and measured accuracies will be added after that run.
+captioning model. Both were met on Kaggle:
+
+| Question | Check | Result |
+| --- | --- | --- |
+| Q1 | Batch/layer norm gradient checks | dx, dgamma, dbeta errors ≤ 1.7e-9 |
+| Q2 | Dropout gradient checks | dx error 5.4e-11; dropout 35.4% val vs 31.7% without |
+| Q3 | Conv/pool/fast-layer checks | errors ≤ 2.2e-8; small data 82% train accuracy |
+| Q4 | Open-ended ResNet-style model (10 epochs) | **84.5% best val / 83.0% final val / 80.5% test** |
+| Q5 | RNN overfitting on small COCO data | final loss **0.0134** (< 0.1) |
 
 ## Notes
 
-- Assignment 1 and Assignment 2 code are complete.
+- Assignment 1 and Assignment 2 code are complete, and the executed notebooks
+  with Kaggle outputs are committed for both assignments.
 - `solver.py`, `layer_utils.py`, `fast_layers.py`, `gradient_check.py`,
   `data_utils.py`, `coco_utils.py`, and `vis_utils.py` are course-provided
   utilities.
 - Trained Assignment 1 models are saved in `assignment1/cs231n/saved/`.
-- Assignment 2 notebooks intentionally start without outputs until they are
-  executed on Kaggle.
 
 ## Attribution
 

@@ -69,10 +69,10 @@ for the implemented layers and models also pass with small relative errors.
 
 | Question | Observed result | Status |
 | --- | --- | --- |
-| Q1: Batch/layer normalization | Forward/backward checks pass; best shown validation accuracy is 34.5% | Passed |
-| Q2: Dropout | Forward/backward checks pass; best shown validation accuracy is 35.4% | Passed |
+| Q1: Batch/layer normalization | Forward/backward checks pass; normalization stays stable across weight scales and batch sizes (validation accuracy up to ~36%) | Passed |
+| Q2: Dropout | Forward/backward checks pass; best shown validation accuracy is 35.4% vs 31.7% without dropout | Passed |
 | Q3: Convolutional networks | Naive/fast layer checks pass; small-data train accuracy reaches 82% | Passed |
-| Q4: Open-ended PyTorch model | 83.0% validation accuracy; 80.5% test accuracy | Passed |
+| Q4: Open-ended PyTorch model | 84.5% best / 83.0% final-epoch validation accuracy; 80.5% test accuracy | Passed |
 | Q5: RNN captioning | Small-data final loss is 0.0134 | Passed |
 
 The required targets are:
