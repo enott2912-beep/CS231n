@@ -26,6 +26,19 @@ assignment2/cs231n/datasets/coco_captioning/
 assignment2/cs231n/datasets/*.zip
 assignment2/cs231n/datasets/*.h5
 assignment2/cs231n/datasets/*.npy
+assignment3/cs231n/datasets/cifar-10-batches-py/
+assignment3/cs231n/datasets/coco_captioning/
+assignment3/cs231n/datasets/*.tar.gz
+assignment3/cs231n/datasets/*.zip
+assignment3/cs231n/datasets/*.h5
+assignment3/cs231n/datasets/*.npy
+assignment3/cs231n/datasets/*.npz
+assignment3/cs231n/datasets/*.pkl
+assignment3/data/
+assignment3/results/
+assignment3/pretrained_model/
+assignment3/cs231n/exp/pretrained/
+assignment3/*.mp4
 
 # Cython build artifacts
 assignment2/cs231n/*.c
@@ -37,6 +50,8 @@ a1_code_submission.zip
 a1_inline_submission.pdf
 a2_code_submission.zip
 a2_inline_submission.pdf
+a3_code_submission.zip
+a3_inline_submission.pdf
 *.pdf
 
 # Editors

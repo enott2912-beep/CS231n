@@ -44,6 +44,14 @@ CS231n/
 │   ├── ConvolutionalNetworks.ipynb
 │   ├── PyTorch.ipynb
 │   └── RNN_Captioning_pytorch.ipynb
+├── assignment3/
+│   ├── README.md
+│   ├── KAGGLE.md
+│   ├── cs231n/
+│   ├── Transformer_Captioning.ipynb
+│   ├── Self_Supervised_Learning.ipynb
+│   ├── DDPM.ipynb
+│   └── CLIP_DINO.ipynb
 └── final_project/          # added in the final part of the course
 ```
 
@@ -52,8 +60,8 @@ CS231n/
 | Assignment | Topics | Status |
 | --- | --- | --- |
 | Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Complete; executed on Kaggle |
-| Assignment 2 | Batch/layer normalization, dropout, convolutional networks, PyTorch, RNN captioning | Code complete; notebooks to be executed on Kaggle |
-| Assignment 3 | Image captioning / detection / segmentation | Planned |
+| Assignment 2 | Batch/layer normalization, dropout, convolutional networks, PyTorch, RNN captioning | Complete; executed on Kaggle |
+| Assignment 3 | Transformers/ViT, SimCLR, diffusion models, CLIP/DINO | Code complete; notebooks to be executed on Kaggle |
 | Final project | Open-ended computer-vision project | Planned |
 
 ## Environment
@@ -67,7 +75,9 @@ uv run jupyter lab
 ```
 
 Assignment 2 uses the same environment and adds PyTorch, torchvision, `h5py`
-and Cython for the fast convolution and RNN exercises.
+and Cython for the fast convolution and RNN exercises. Assignment 3 additionally
+uses `einops`, `tqdm`, `pandas`, `scikit-learn`, `thop`, `opencv-python`,
+`openai-clip`, `ftfy` and `regex`.
 
 The notebook setup cells use `cs231n/datasets/cifar-10-batches-py` for CIFAR-10
 and `cs231n/datasets/coco_captioning` for the RNN captioning data. The datasets
@@ -80,8 +90,9 @@ are not committed to this repository. You can either:
   `/kaggle/input` and link it automatically.
 
 For step-by-step Kaggle workflows, see
-[assignment1/KAGGLE.md](assignment1/KAGGLE.md) and
-[assignment2/KAGGLE.md](assignment2/KAGGLE.md).
+[assignment1/KAGGLE.md](assignment1/KAGGLE.md),
+[assignment2/KAGGLE.md](assignment2/KAGGLE.md) and
+[assignment3/KAGGLE.md](assignment3/KAGGLE.md).
 
 ## Assignment 1 results
 
@@ -124,10 +135,27 @@ captioning model. Both were met on Kaggle:
 | Q4 | Open-ended ResNet-style model (10 epochs) | **84.5% best val / 83.0% final val / 80.5% test** |
 | Q5 | RNN overfitting on small COCO data | final loss **0.0134** (< 0.1) |
 
+## Assignment 3
+
+Assignment 3 covers modern representation learning and generative models:
+
+- Transformer attention, positional encoding, decoder blocks, and a ViT;
+- SimCLR contrastive pretraining on CIFAR-10;
+- DDPM forward/reverse diffusion, a conditional U-Net, and classifier-free
+  guidance;
+- CLIP zero-shot classification/retrieval and DINO features for segmentation.
+
+The implementation is complete in `assignment3/`, but the notebooks are not yet
+executed. Their required targets are above 0.45 CIFAR-10 test accuracy for the
+ViT after 2 epochs, a Transformer overfit loss below 0.05, and mean IoU above
+0.55 for DINO segmentation over the full video. See
+[assignment3/README.md](assignment3/README.md) for the detailed task list.
+
 ## Notes
 
-- Assignment 1 and Assignment 2 code are complete, and the executed notebooks
-  with Kaggle outputs are committed for both assignments.
+- Assignment 1 and Assignment 2 code are complete, and their executed notebooks
+  with Kaggle outputs are committed. Assignment 3 code is complete; its notebooks
+  are ready to be executed on Kaggle.
 - `solver.py`, `layer_utils.py`, `fast_layers.py`, `gradient_check.py`,
   `data_utils.py`, `coco_utils.py`, and `vis_utils.py` are course-provided
   utilities.

@@ -1,0 +1,8 @@
+# Dependencies are managed by the single uv project at the repository root.
+# From the repository root run:
+#
+#   uv sync
+#   cd assignment3 && uv run jupyter lab
+#
+# See KAGGLE.md for the equivalent pip installs on Kaggle. The pinned list in
+# the original course starter file is obsolete (it predates PyTorch).
