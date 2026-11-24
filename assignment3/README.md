@@ -60,7 +60,8 @@ measured training results are:
 | Check | Target | Observed | Status |
 | --- | --- | --- | --- |
 | Transformer captioning overfit | loss < 0.05 | 0.0224 | Passed |
-| ViT on CIFAR-10 (2 epochs) | > 0.45 test accuracy | 0.1936 | **Not met** |
+| ViT one-batch overfit | 1.00 top-1 | 1.000 | Passed |
+| ViT on CIFAR-10 (2 epochs) | > 0.45 test accuracy | 0.3008 | **Not met** |
 | SimCLR augmentation/loss sanity checks | ~0 error | 0 – 5.7e-8 | Passed |
 | SimCLR linear evaluation | pretrained > baseline | 82.5% vs 15.3% | Passed |
 | DDPM forward/reverse checks | ≤ 1e-5 error | 0 – 8.1e-6 | Passed |
@@ -68,11 +69,14 @@ measured training results are:
 | DINO segmentation (first/last frame) | > 0.45 / > 0.50 IoU | 0.369 / 0.532 | First frame **not met** |
 | DINO segmentation (all frames) | > 0.55 IoU | 0.574 | Passed |
 
-The ViT recipe was retuned after the first run (augmentation, CIFAR-10
-normalization, lighter weight decay, batch 64, no dropout). The DINO probe was
-left at its known-good settings and its evaluation now prints per-class IoU and
-class counts. Both cells need another Kaggle run, so their stale outputs were
-cleared. See [KAGGLE.md](KAGGLE.md) for details.
+The second ViT run improved from 0.1936 to 0.3008 and the one-batch overfit
+check now reaches 1.00, but two epochs still leave the model short of 0.45.
+The per-class DINO diagnostics showed why the first frame is hard: it contains
+only 11–32 patches of each small object class, so the linear probe misses them.
+
+Both heads are now on a stronger recipe (4×4 patches with hidden 128, FFN 256,
+batch 16, lr 5e-4 for the ViT; a 2-layer MLP for the DINO probe), and their
+outputs were cleared until that run is executed. See [KAGGLE.md](KAGGLE.md).
 
 ## Attribution
 

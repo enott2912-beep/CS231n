@@ -254,8 +254,15 @@ class DINOSegmentation:
         ############################################################################
         self.device = device
         self.num_classes = num_classes
-        self.model = nn.Linear(inp_dim, num_classes).to(device)
-        self.optimizer = torch.optim.Adam(
+        # A two-layer MLP over frozen DINO patch features. A linear probe leaves
+        # a few points on the table; one hidden layer with GELU separates the
+        # small object classes better while still being very lightweight.
+        self.model = nn.Sequential(
+            nn.Linear(inp_dim, 256),
+            nn.GELU(),
+            nn.Linear(256, num_classes),
+        ).to(device)
+        self.optimizer = torch.optim.AdamW(
             self.model.parameters(), lr=1e-3, weight_decay=1e-4
         )
         self.loss_fn = nn.CrossEntropyLoss()

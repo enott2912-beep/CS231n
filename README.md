@@ -148,8 +148,10 @@ Assignment 3 covers modern representation learning and generative models:
 The notebooks were executed on Kaggle and the outputs are committed. All
 sanity checks and the Transformer overfit loss (0.0224) passed, as did SimCLR
 linear evaluation (82.5% vs 15.3% baseline) and full-video DINO IoU (0.574).
-Two targets still need another run: ViT test accuracy was 0.1936 (target > 0.45
-after 2 epochs) and DINO IoU on the first test frame was 0.369 (target > 0.45).
+Two targets still need another run: ViT test accuracy reached 0.3008 in the
+second run (target > 0.45 after 2 epochs) and DINO IoU on the first test frame
+was 0.369 (target > 0.45). Both heads now use a stronger recipe; the affected
+outputs are cleared until that run is executed.
 See [assignment3/README.md](assignment3/README.md) for the full results table.
 
 ## Notes
