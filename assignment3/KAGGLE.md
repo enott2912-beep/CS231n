@@ -93,12 +93,17 @@ The committed outputs are error-free, but two training targets were missed:
 - **ViT test accuracy 0.1936** (target > 0.45 after 2 epochs). The model can
   memorize a batch, so this is an optimization/regularization issue rather than
   a forward-pass bug. The notebook now uses random-crop/flip augmentation and
-  CIFAR-10 normalization (cell 43), 1e-3 learning rate for the overfit check
-  (cell 44), and 0.01 weight decay for the full run (cell 47).
+  CIFAR-10 normalization (cell 43), an unaugmented copy of the training set for
+  the one-batch overfit check (cell 44), 1e-3 learning rate, 0.01 weight decay,
+  batch 64 and no dropout for the full run (cell 47). The smaller batch doubles
+  the number of optimizer steps available in the two epochs.
 - **DINO first-frame IoU 0.369** (target > 0.45; last frame 0.532 and full video
-  0.574 passed). The linear probe overfit the single annotated frame. It now
-  uses Adam with lr 5e-4, weight decay 1e-3, label smoothing 0.1, and 300
-  iterations.
+  0.574 passed). The probe has only ~1.5k parameters, so overfitting is an
+  unlikely explanation. The original probe (Adam, lr 1e-3, weight decay 1e-4,
+  500 iterations) is kept because it already passes the last-frame and full-video
+  targets. The evaluation cell now prints per-class IoU and ground-truth/predicted
+  class counts for each test frame, which shows whether the first-frame miss is a
+  class that is absent from that frame.
 
 The outputs of the affected cells were cleared. Rerun `Transformer_Captioning.ipynb`
 and `CLIP_DINO.ipynb` on Kaggle from the top, download the notebooks, and send

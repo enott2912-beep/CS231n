@@ -68,10 +68,11 @@ measured training results are:
 | DINO segmentation (first/last frame) | > 0.45 / > 0.50 IoU | 0.369 / 0.532 | First frame **not met** |
 | DINO segmentation (all frames) | > 0.55 IoU | 0.574 | Passed |
 
-The ViT and first-frame DINO targets have been retuned in the notebooks
-(augmentation + lighter weight decay for the ViT; stronger regularization and
-label smoothing for the DINO probe), but those cells need another Kaggle run.
-Their stale outputs were cleared. See [KAGGLE.md](KAGGLE.md) for details.
+The ViT recipe was retuned after the first run (augmentation, CIFAR-10
+normalization, lighter weight decay, batch 64, no dropout). The DINO probe was
+left at its known-good settings and its evaluation now prints per-class IoU and
+class counts. Both cells need another Kaggle run, so their stale outputs were
+cleared. See [KAGGLE.md](KAGGLE.md) for details.
 
 ## Attribution
 

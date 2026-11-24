@@ -256,10 +256,9 @@ class DINOSegmentation:
         self.num_classes = num_classes
         self.model = nn.Linear(inp_dim, num_classes).to(device)
         self.optimizer = torch.optim.Adam(
-            self.model.parameters(), lr=5e-4, weight_decay=1e-3
+            self.model.parameters(), lr=1e-3, weight_decay=1e-4
         )
-        # Label smoothing reduces overconfidence on the single annotated frame.
-        self.loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
+        self.loss_fn = nn.CrossEntropyLoss()
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
