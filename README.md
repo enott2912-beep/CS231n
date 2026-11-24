@@ -61,7 +61,7 @@ CS231n/
 | --- | --- | --- |
 | Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Complete; executed on Kaggle |
 | Assignment 2 | Batch/layer normalization, dropout, convolutional networks, PyTorch, RNN captioning | Complete; executed on Kaggle |
-| Assignment 3 | Transformers/ViT, SimCLR, diffusion models, CLIP/DINO | Code complete; notebooks to be executed on Kaggle |
+| Assignment 3 | Transformers/ViT, SimCLR, diffusion models, CLIP/DINO | Executed on Kaggle; two accuracy targets need another run |
 | Final project | Open-ended computer-vision project | Planned |
 
 ## Environment
@@ -145,17 +145,17 @@ Assignment 3 covers modern representation learning and generative models:
   guidance;
 - CLIP zero-shot classification/retrieval and DINO features for segmentation.
 
-The implementation is complete in `assignment3/`, but the notebooks are not yet
-executed. Their required targets are above 0.45 CIFAR-10 test accuracy for the
-ViT after 2 epochs, a Transformer overfit loss below 0.05, and mean IoU above
-0.55 for DINO segmentation over the full video. See
-[assignment3/README.md](assignment3/README.md) for the detailed task list.
+The notebooks were executed on Kaggle and the outputs are committed. All
+sanity checks and the Transformer overfit loss (0.0224) passed, as did SimCLR
+linear evaluation (82.5% vs 15.3% baseline) and full-video DINO IoU (0.574).
+Two targets still need another run: ViT test accuracy was 0.1936 (target > 0.45
+after 2 epochs) and DINO IoU on the first test frame was 0.369 (target > 0.45).
+See [assignment3/README.md](assignment3/README.md) for the full results table.
 
 ## Notes
 
-- Assignment 1 and Assignment 2 code are complete, and their executed notebooks
-  with Kaggle outputs are committed. Assignment 3 code is complete; its notebooks
-  are ready to be executed on Kaggle.
+- Assignments 1–3 are implemented and their Kaggle-executed notebooks are
+  committed; two Assignment 3 training targets still need a rerun.
 - `solver.py`, `layer_utils.py`, `fast_layers.py`, `gradient_check.py`,
   `data_utils.py`, `coco_utils.py`, and `vis_utils.py` are course-provided
   utilities.

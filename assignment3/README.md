@@ -53,9 +53,23 @@ learning, denoising diffusion models, and pretrained CLIP/DINO representations.
 | DINO segmentation (DAVIS) | mean IoU > 0.45 / 0.50 on first/last test frame, > 0.55 over the video |
 | DDPM / SimCLR sanity checks | relative errors well below 1e-5 |
 
-The code and inline answers are complete, but the notebooks are intentionally
-left unexecuted; run them on Kaggle and commit the outputs afterwards. See
-[KAGGLE.md](KAGGLE.md) for the workflow and dataset requirements.
+The Kaggle executions were downloaded and checked. All four notebooks ran
+without error outputs, and every implementation sanity check passed. The
+measured training results are:
+
+| Check | Target | Observed | Status |
+| --- | --- | --- | --- |
+| Transformer captioning overfit | loss < 0.05 | 0.0224 | Passed |
+| ViT on CIFAR-10 (2 epochs) | > 0.45 test accuracy | 0.1936 | **Not met** |
+| SimCLR augmentation/loss sanity checks | ~0 error | 0 – 5.7e-8 | Passed |
+| SimCLR linear evaluation | pretrained > baseline | 82.5% vs 15.3% | Passed |
+| DDPM forward/reverse checks | ≤ 1e-5 error | 0 – 8.1e-6 | Passed |
+| CLIP similarity/zero-shot/retrieval | ≤ 1e-5 error; expected labels | 1.3e-6; exact match | Passed |
+| DINO segmentation (first/last frame) | > 0.45 / > 0.50 IoU | 0.369 / 0.532 | First frame **not met** |
+| DINO segmentation (all frames) | > 0.55 IoU | 0.574 | Passed |
+
+The ViT and first-frame DINO targets need another Kaggle run with adjusted
+training hyperparameters; see [KAGGLE.md](KAGGLE.md).
 
 ## Attribution
 

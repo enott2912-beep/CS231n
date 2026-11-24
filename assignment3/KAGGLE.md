@@ -86,7 +86,24 @@ sections; switch runtimes before starting a notebook and rerun it from the top.
 - **`makepdf.py` cannot find PyPDF2 or LaTeX** — install `PyPDF2` and a TeX
   distribution for the inline PDF; the code zip is produced regardless.
 
-## 6. Save the results
+## 6. Known target gaps in the first Kaggle run
+
+The committed outputs are error-free, but two training targets were missed:
+
+- **ViT test accuracy 0.1936** (target > 0.45 after 2 epochs). The model can
+  memorize a batch, so this is an optimization/regularization issue rather than
+  a forward-pass bug. For the rerun, tune the learning rate and weight decay in
+  cell 47 and consider stronger augmentation/normalization for the CIFAR-10
+  transforms in cell 43 (the notebook currently uses plain `ToTensor`).
+- **DINO first-frame IoU 0.369** (target > 0.45; last frame 0.532 and full video
+  0.574 passed). The linear probe overfits the single training frame. Increase
+  regularization in `DINOSegmentation` (e.g. stronger weight decay or fewer
+  iterations) and rerun the segmentation section.
+
+Adjust those hyperparameters, rerun the affected notebooks on Kaggle, and
+commit the new outputs.
+
+## 7. Save the results
 
 After each notebook finishes, download the executed `.ipynb`, replace the
 corresponding file in the local repository, and commit it with its outputs.
