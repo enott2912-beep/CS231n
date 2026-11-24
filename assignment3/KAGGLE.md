@@ -92,16 +92,17 @@ The committed outputs are error-free, but two training targets were missed:
 
 - **ViT test accuracy 0.1936** (target > 0.45 after 2 epochs). The model can
   memorize a batch, so this is an optimization/regularization issue rather than
-  a forward-pass bug. For the rerun, tune the learning rate and weight decay in
-  cell 47 and consider stronger augmentation/normalization for the CIFAR-10
-  transforms in cell 43 (the notebook currently uses plain `ToTensor`).
+  a forward-pass bug. The notebook now uses random-crop/flip augmentation and
+  CIFAR-10 normalization (cell 43), 1e-3 learning rate for the overfit check
+  (cell 44), and 0.01 weight decay for the full run (cell 47).
 - **DINO first-frame IoU 0.369** (target > 0.45; last frame 0.532 and full video
-  0.574 passed). The linear probe overfits the single training frame. Increase
-  regularization in `DINOSegmentation` (e.g. stronger weight decay or fewer
-  iterations) and rerun the segmentation section.
+  0.574 passed). The linear probe overfit the single annotated frame. It now
+  uses Adam with lr 5e-4, weight decay 1e-3, label smoothing 0.1, and 300
+  iterations.
 
-Adjust those hyperparameters, rerun the affected notebooks on Kaggle, and
-commit the new outputs.
+The outputs of the affected cells were cleared. Rerun `Transformer_Captioning.ipynb`
+and `CLIP_DINO.ipynb` on Kaggle from the top, download the notebooks, and send
+them back so the outputs can be committed again.
 
 ## 7. Save the results
 
