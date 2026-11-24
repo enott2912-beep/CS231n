@@ -1,34 +1,39 @@
-# Stanford CS231n — Coursework
+# Stanford CS231n — Deep Learning for Computer Vision
 
-This repository contains my solutions to **Stanford CS231n: Deep Learning for
-Computer Vision**, together with the final course project. It is organized as a
-single Python project so that all assignments share one reproducible
-environment.
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)
+![uv](https://img.shields.io/badge/managed%20with-uv-DE5FE9)
+![Jupyter](https://img.shields.io/badge/notebooks-Jupyter-F37626?logo=jupyter&logoColor=white)
 
-## About the course
+Complete solutions to all three assignments of **Stanford CS231n: Deep Learning
+for Computer Vision**. Every assignment notebook was executed end-to-end and its
+outputs are committed, so the reported numbers can be read directly from the
+repository. All assignments share a single [uv](https://docs.astral.sh/uv/)
+project and one reproducible environment.
 
-[CS231n](https://cs231n.stanford.edu/) is Stanford's course on deep learning for
-computer vision. The assignments cover the full image-classification pipeline,
-from linear classifiers and k-nearest neighbors to fully connected networks and
-convolutional networks.
+## At a glance
 
-The starter code, notebooks, and assignment materials are provided by Stanford
-CS231n and remain the property of their authors. This is an unofficial
-coursework/portfolio repository and is not affiliated with or endorsed by
-Stanford University.
+| # | Assignment | Topics | Headline result |
+| --- | --- | --- | --- |
+| 1 | Image-classification foundations | kNN, Softmax, two-layer networks, HOG/color features, fully connected networks | **59.3%** CIFAR-10 test with HOG/color features |
+| 2 | Convolutional and recurrent networks | batch/layer normalization, dropout, convolutions, PyTorch, RNN captioning | **80.5%** CIFAR-10 test; RNN overfit loss **0.0134** |
+| 3 | Transformers and generative models | attention, ViT, SimCLR, DDPM, CLIP/DINO | ViT **0.4941** in 2 epochs; DINO IoU **0.643** |
+
+All 14 assignment notebooks ran without execution errors, and every numerical
+sanity check passes at float32 precision. Datasets and trained checkpoints are
+not committed; each assignment's `KAGGLE.md` documents how to obtain them.
 
 ## Repository layout
 
 ```text
 CS231n/
-├── pyproject.toml          # one uv project for all assignments and the final project
+├── pyproject.toml              # one uv project for all assignments
 ├── uv.lock
 ├── .python-version
-├── .gitignore
 ├── README.md
 ├── assignment1/
-│   ├── README.md
-│   ├── KAGGLE.md
+│   ├── README.md               # task list, implementations, results
+│   ├── KAGGLE.md               # dataset and runtime notes
 │   ├── cs231n/
 │   ├── knn.ipynb
 │   ├── softmax.ipynb
@@ -44,124 +49,126 @@ CS231n/
 │   ├── ConvolutionalNetworks.ipynb
 │   ├── PyTorch.ipynb
 │   └── RNN_Captioning_pytorch.ipynb
-├── assignment3/
-│   ├── README.md
-│   ├── KAGGLE.md
-│   ├── cs231n/
-│   ├── Transformer_Captioning.ipynb
-│   ├── Self_Supervised_Learning.ipynb
-│   ├── DDPM.ipynb
-│   └── CLIP_DINO.ipynb
-└── final_project/          # added in the final part of the course
+└── assignment3/
+    ├── README.md
+    ├── KAGGLE.md
+    ├── cs231n/
+    ├── Transformer_Captioning.ipynb
+    ├── Self_Supervised_Learning.ipynb
+    ├── DDPM.ipynb
+    └── CLIP_DINO.ipynb
 ```
-
-## Assignments
-
-| Assignment | Topics | Status |
-| --- | --- | --- |
-| Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Complete; executed on Kaggle |
-| Assignment 2 | Batch/layer normalization, dropout, convolutional networks, PyTorch, RNN captioning | Complete; executed on Kaggle |
-| Assignment 3 | Transformers/ViT, SimCLR, diffusion models, CLIP/DINO | Complete; all Kaggle targets met |
-| Final project | Open-ended computer-vision project | Planned |
 
 ## Environment
 
-The project uses [uv](https://docs.astral.sh/uv/) and Python 3.11.
+The project targets **Python 3.11** and installs all assignment dependencies
+through uv:
 
 ```bash
 uv sync
-cd assignment1
 uv run jupyter lab
 ```
 
-Assignment 2 uses the same environment and adds PyTorch, torchvision, `h5py`
-and Cython for the fast convolution and RNN exercises. Assignment 3 additionally
-uses `einops`, `tqdm`, `pandas`, `scikit-learn`, `thop`, `opencv-python`,
-`openai-clip`, `ftfy` and `regex`.
+The shared environment covers NumPy/SciPy, PyTorch and torchvision, Cython,
+`h5py`, `imageio`, scikit-learn, pandas, `einops`, `thop`, `opencv-python`,
+`openai-clip`, `ftfy` and `regex`. `setuptools<81` is pinned because
+`openai-clip` still imports `pkg_resources`.
 
-The notebook setup cells use `cs231n/datasets/cifar-10-batches-py` for CIFAR-10
-and `cs231n/datasets/coco_captioning` for the RNN captioning data. The datasets
-are not committed to this repository. You can either:
+Datasets are not committed. Each notebook's setup cell looks for CIFAR-10 and
+COCO under the assignment directory and under `/kaggle/input`, and links a
+mounted Kaggle dataset automatically. Otherwise, run the course download
+scripts from the assignment's `cs231n/datasets` directory.
 
-- run the course download scripts from the assignment's `cs231n/datasets`
-  directory, or
-- mount the datasets in the execution environment; the setup cells look for a
-  `cifar-10-batches-py` directory (or `coco2014_captions.h5`) under
-  `/kaggle/input` and link it automatically.
+## Assignment 1 — Image-classification foundations
 
-For step-by-step Kaggle workflows, see
-[assignment1/KAGGLE.md](assignment1/KAGGLE.md),
-[assignment2/KAGGLE.md](assignment2/KAGGLE.md) and
-[assignment3/KAGGLE.md](assignment3/KAGGLE.md).
-
-## Assignment 1 results
-
-The notebooks are executed on Kaggle and the resulting outputs are committed
-back to this repository. The target accuracies from the assignment are:
+Implements the classical pipeline from scratch: distance-based classifiers, a
+Softmax classifier with analytic gradients, a modular two-layer network, image
+feature representations, and fully connected networks with an SGD/Momentum/
+Adam optimizer library.
 
 | Question | Model | Target | Result |
 | --- | --- | --- | --- |
-| Q1 | k-nearest neighbors | ~28% test accuracy | **28.2% test** |
-| Q2 | Softmax on raw pixels | >36% validation accuracy | **37.4% val / 36.3% test** |
-| Q3 | Two-layer neural network | >48% validation/test accuracy | **52.1% val / 48.2% test** |
-| Q4 | Softmax on HOG/color features | >42% validation accuracy | **43.6% val / 42.0% test** |
-| Q4 | Two-layer network on HOG/color features | >55% test accuracy | **62.5% val / 59.3% test** |
-| Q5 | Fully connected network | >=50% validation/test accuracy | **52.5% val / 52.0% test** |
+| Q1 | k-nearest neighbors | ~28% test | **28.2% test** |
+| Q2 | Softmax on raw pixels | >36% validation | **37.4% val / 36.3% test** |
+| Q3 | Two-layer network | >48% validation/test | **52.1% val / 48.2% test** |
+| Q4 | Softmax on HOG/color features | >42% validation | **43.6% val / 42.0% test** |
+| Q4 | Two-layer network on HOG/color features | >55% test | **62.5% val / 59.3% test** |
+| Q5 | Fully connected network | ≥50% validation/test | **52.5% val / 52.0% test** |
 
-The executed notebooks and trained model files are committed in `assignment1/`.
+The executed notebooks and trained model files are in `assignment1/`. Details:
+[assignment1/README.md](assignment1/README.md).
 
-## Assignment 2
+## Assignment 2 — Convolutional and recurrent networks
 
-Assignment 2 implements the layer primitives and training code directly, then
-moves to PyTorch and recurrent networks:
+Implements the layer primitives and training code directly, then moves to
+PyTorch and recurrent networks:
 
 - batch normalization, layer normalization, dropout, and spatial group
   normalization;
 - naive convolution and max-pooling forward/backward passes;
 - `FullyConnectedNet` with normalization and dropout options;
-- `ThreeLayerConvNet`;
+- `ThreeLayerConvNet` and the Cython `im2col` fast layers;
 - PyTorch exercises on CIFAR-10, including an open-ended ResNet-style model;
 - an RNN/LSTM image-captioning model on COCO.
-
-The required targets are at least **70% CIFAR-10 validation accuracy** for the
-open-ended PyTorch model and a final overfit loss below **0.1** for the RNN
-captioning model. Both were met on Kaggle:
 
 | Question | Check | Result |
 | --- | --- | --- |
 | Q1 | Batch/layer norm gradient checks | dx, dgamma, dbeta errors ≤ 1.7e-9 |
-| Q2 | Dropout gradient checks | dx error 5.4e-11; dropout 35.4% val vs 31.7% without |
-| Q3 | Conv/pool/fast-layer checks | errors ≤ 2.2e-8; small data 82% train accuracy |
+| Q2 | Dropout gradient checks | dx error 5.4e-11; 35.4% val vs 31.7% without dropout |
+| Q3 | Conv/pool/fast-layer checks | errors ≤ 2.2e-8; 82% small-data train accuracy |
 | Q4 | Open-ended ResNet-style model (10 epochs) | **84.5% best val / 83.0% final val / 80.5% test** |
 | Q5 | RNN overfitting on small COCO data | final loss **0.0134** (< 0.1) |
 
-## Assignment 3
+Details: [assignment2/README.md](assignment2/README.md).
 
-Assignment 3 covers modern representation learning and generative models:
+## Assignment 3 — Transformers and generative models
 
-- Transformer attention, positional encoding, decoder blocks, and a ViT;
-- SimCLR contrastive pretraining on CIFAR-10;
+The final assignment brings together modern representation learning and
+generative modelling:
+
+- multi-head attention, positional encoding, encoder/decoder blocks, and a
+  Vision Transformer;
+- SimCLR contrastive pretraining and linear evaluation on CIFAR-10;
 - DDPM forward/reverse diffusion, a conditional U-Net, and classifier-free
   guidance;
-- CLIP zero-shot classification/retrieval and DINO features for segmentation.
+- CLIP zero-shot classification/retrieval and DINO features for one-shot video
+  segmentation on DAVIS.
 
-The notebooks were executed on Kaggle and the outputs are committed. All
-Assignment 3 targets pass: ViT test accuracy 0.4941 after 2 epochs (target
-> 0.45), Transformer overfit loss 0.0224, SimCLR linear evaluation 82.5% vs
-15.3% baseline, DINO mean IoU 0.471 / 0.555 / 0.643 (targets > 0.45 / 0.50 /
-0.55), and all implementation sanity checks at float32 precision.
-See [assignment3/README.md](assignment3/README.md) for the full results table.
+| Check | Target | Observed |
+| --- | --- | --- |
+| Transformer captioning overfit | loss < 0.05 | **0.0224** |
+| ViT one-batch overfit | 1.00 top-1 | **1.000** |
+| ViT on CIFAR-10 (2 epochs) | > 0.45 test accuracy | **0.4941** |
+| SimCLR augmentation/loss sanity checks | ~0 error | **0 – 5.7e-8** |
+| SimCLR linear evaluation | pretrained > baseline | **82.5% vs 15.3%** |
+| DDPM forward/reverse checks | ≤ 1e-5 error | **0 – 8.1e-6** |
+| CLIP similarity / zero-shot / retrieval | ≤ 1e-5 error; expected labels | **1.3e-6; exact match** |
+| DINO segmentation, first / last frame | > 0.45 / > 0.50 IoU | **0.471 / 0.555** |
+| DINO segmentation, all frames | > 0.55 IoU | **0.643** |
 
-## Notes
+Two recipes were decisive. The ViT clears the two-epoch target only when the
+number of updates is large enough: 4×4 patches, hidden 128, FFN 256, batch 16,
+lr 5e-4 and weight decay 1e-4. DINO's first test frame contains just 11–32
+patches of each small object class, so a two-layer MLP over the frozen features
+outperforms a linear probe. Details and dataset notes:
+[assignment3/README.md](assignment3/README.md) and
+[assignment3/KAGGLE.md](assignment3/KAGGLE.md).
 
-- Assignments 1–3 are implemented and their Kaggle-executed notebooks are
-  committed; all Assignment 3 targets pass.
+## Reproducibility notes
+
+- The notebooks were run on Kaggle; their outputs are committed as executed.
+- Datasets (`cifar-10-batches-py`, `coco_captioning`, DAVIS, emoji data) and
+  model checkpoints are ignored by Git and downloaded on demand.
 - `solver.py`, `layer_utils.py`, `fast_layers.py`, `gradient_check.py`,
-  `data_utils.py`, `coco_utils.py`, and `vis_utils.py` are course-provided
-  utilities.
-- Trained Assignment 1 models are saved in `assignment1/cs231n/saved/`.
+  `data_utils.py`, `coco_utils.py` and `vis_utils.py` are course-provided
+  utilities; the assignment implementations live alongside them.
+- The PDF step in `collectSubmission.sh` requires a LaTeX installation
+  (`xelatex`); the code archive is produced without it.
+- The course's final project is not part of this repository.
 
 ## Attribution
 
-Starter code and assignment materials: Stanford CS231n course staff.
-Solutions and repository organization: the repository author.
+Starter code, notebooks and assignment materials: **Stanford CS231n course
+staff**. Implementations, experiments and repository organization: the
+repository author. This is an unofficial coursework repository and is not
+affiliated with or endorsed by Stanford University.
