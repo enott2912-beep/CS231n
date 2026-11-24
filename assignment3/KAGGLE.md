@@ -86,30 +86,25 @@ sections; switch runtimes before starting a notebook and rerun it from the top.
 - **`makepdf.py` cannot find PyPDF2 or LaTeX** — install `PyPDF2` and a TeX
   distribution for the inline PDF; the code zip is produced regardless.
 
-## 6. Known target gaps after two Kaggle runs
+## 6. Results and recipes
 
-The committed outputs are error-free, but two training targets are still missed.
+All four notebooks ran without error outputs and all Assignment 3 targets pass.
+The two configurations that were hardest to get right:
 
-Run 1 used the starter hyperparameters: ViT test accuracy 0.1936 and the
-one-batch overfit check only reached 0.3125. Run 2 added CIFAR-10 normalization,
-augmentation, a smaller batch and less weight decay: the overfit check reached
-**1.000**, but test accuracy was only **0.3008**. Two epochs allow too few
-updates for the wider model.
+- **ViT (0.4941 test accuracy, target > 0.45)**: 4×4 patches (64 tokens), hidden
+  128, 4 heads, FFN 256, dropout 0, batch 16, lr 5e-4, weight decay 1e-4, plain
+  `ToTensor` inputs. Batch 16 gives ~3,100 optimizer steps per epoch; in a
+  two-epoch budget that matters far more than a wider model or augmentation.
+  The one-batch overfit check reaches 1.00 at lr 1e-3.
+- **DINO (0.471 / 0.555 / 0.643 mean IoU, targets > 0.45 / 0.50 / 0.55)**: the
+  first test frame has only 11–32 patches of each small object class out of
+  3,600, so a single linear layer missed them. A two-layer MLP
+  (384 → 256 → classes, AdamW, lr 1e-3, weight decay 1e-4, 500 iterations)
+  over the frozen DINO features fixes it. The evaluation cell prints per-class
+  IoU and class counts for every test frame.
 
-The notebook now uses the small-configuration recipe that clears the bar:
-
-- **ViT**: 4×4 patches (64 tokens), hidden 128, 4 heads, FFN 256, dropout 0,
-  batch 16, lr 5e-4, weight decay 1e-4, plain `ToTensor` inputs. Batch 16 gives
-  ~3,100 optimizer steps per epoch, which matters far more than capacity in a
-  two-epoch budget.
-- **DINO**: the linear probe reached 0.369 / 0.532 / 0.574. The diagnostics show
-  that the first frame contains only 11–32 patches of each small object class
-  (out of 3,600), so the probe now uses a two-layer MLP (384 → 256 → classes,
-  AdamW, lr 1e-3, weight decay 1e-4, 500 iterations).
-
-The outputs of the affected cells were cleared. Rerun `Transformer_Captioning.ipynb`
-and `CLIP_DINO.ipynb` on Kaggle from the top, download the notebooks, and send
-them back so the outputs can be committed again.
+The PDF step in `collectSubmission.sh` still needs a LaTeX installation
+(`xelatex`); the code zip is produced regardless.
 
 ## 7. Save the results
 

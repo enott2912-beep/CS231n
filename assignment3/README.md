@@ -61,22 +61,25 @@ measured training results are:
 | --- | --- | --- | --- |
 | Transformer captioning overfit | loss < 0.05 | 0.0224 | Passed |
 | ViT one-batch overfit | 1.00 top-1 | 1.000 | Passed |
-| ViT on CIFAR-10 (2 epochs) | > 0.45 test accuracy | 0.3008 | **Not met** |
+| ViT on CIFAR-10 (2 epochs) | > 0.45 test accuracy | 0.4941 | Passed |
 | SimCLR augmentation/loss sanity checks | ~0 error | 0 – 5.7e-8 | Passed |
 | SimCLR linear evaluation | pretrained > baseline | 82.5% vs 15.3% | Passed |
 | DDPM forward/reverse checks | ≤ 1e-5 error | 0 – 8.1e-6 | Passed |
 | CLIP similarity/zero-shot/retrieval | ≤ 1e-5 error; expected labels | 1.3e-6; exact match | Passed |
-| DINO segmentation (first/last frame) | > 0.45 / > 0.50 IoU | 0.369 / 0.532 | First frame **not met** |
-| DINO segmentation (all frames) | > 0.55 IoU | 0.574 | Passed |
+| DINO segmentation (first/last frame) | > 0.45 / > 0.50 IoU | 0.471 / 0.555 | Passed |
+| DINO segmentation (all frames) | > 0.55 IoU | 0.643 | Passed |
 
-The second ViT run improved from 0.1936 to 0.3008 and the one-batch overfit
-check now reaches 1.00, but two epochs still leave the model short of 0.45.
-The per-class DINO diagnostics showed why the first frame is hard: it contains
-only 11–32 patches of each small object class, so the linear probe misses them.
+All Assignment 3 targets are met. Two changes made the difference:
 
-Both heads are now on a stronger recipe (4×4 patches with hidden 128, FFN 256,
-batch 16, lr 5e-4 for the ViT; a 2-layer MLP for the DINO probe), and their
-outputs were cleared until that run is executed. See [KAGGLE.md](KAGGLE.md).
+- **ViT**: in a two-epoch budget the number of updates dominates capacity. The
+  final recipe uses 4×4 patches, hidden 128, FFN 256, batch 16 (~3,100 steps per
+  epoch), lr 5e-4 and weight decay 1e-4. Test accuracy went from 0.1936 to
+  0.3008 and then to 0.4941.
+- **DINO**: the first test frame contains only 11–32 patches of each small
+  object class, which the linear probe missed. A two-layer MLP over the frozen
+  DINO features raised the mean IoU to 0.471 / 0.555 and 0.643 over the video.
+
+See [KAGGLE.md](KAGGLE.md) for the full recipe and dataset notes.
 
 ## Attribution
 

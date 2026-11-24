@@ -61,7 +61,7 @@ CS231n/
 | --- | --- | --- |
 | Assignment 1 | kNN, Softmax, two-layer network, image features, fully connected networks | Complete; executed on Kaggle |
 | Assignment 2 | Batch/layer normalization, dropout, convolutional networks, PyTorch, RNN captioning | Complete; executed on Kaggle |
-| Assignment 3 | Transformers/ViT, SimCLR, diffusion models, CLIP/DINO | Executed on Kaggle; two accuracy targets need another run |
+| Assignment 3 | Transformers/ViT, SimCLR, diffusion models, CLIP/DINO | Complete; all Kaggle targets met |
 | Final project | Open-ended computer-vision project | Planned |
 
 ## Environment
@@ -146,18 +146,16 @@ Assignment 3 covers modern representation learning and generative models:
 - CLIP zero-shot classification/retrieval and DINO features for segmentation.
 
 The notebooks were executed on Kaggle and the outputs are committed. All
-sanity checks and the Transformer overfit loss (0.0224) passed, as did SimCLR
-linear evaluation (82.5% vs 15.3% baseline) and full-video DINO IoU (0.574).
-Two targets still need another run: ViT test accuracy reached 0.3008 in the
-second run (target > 0.45 after 2 epochs) and DINO IoU on the first test frame
-was 0.369 (target > 0.45). Both heads now use a stronger recipe; the affected
-outputs are cleared until that run is executed.
+Assignment 3 targets pass: ViT test accuracy 0.4941 after 2 epochs (target
+> 0.45), Transformer overfit loss 0.0224, SimCLR linear evaluation 82.5% vs
+15.3% baseline, DINO mean IoU 0.471 / 0.555 / 0.643 (targets > 0.45 / 0.50 /
+0.55), and all implementation sanity checks at float32 precision.
 See [assignment3/README.md](assignment3/README.md) for the full results table.
 
 ## Notes
 
 - Assignments 1–3 are implemented and their Kaggle-executed notebooks are
-  committed; two Assignment 3 training targets still need a rerun.
+  committed; all Assignment 3 targets pass.
 - `solver.py`, `layer_utils.py`, `fast_layers.py`, `gradient_check.py`,
   `data_utils.py`, `coco_utils.py`, and `vis_utils.py` are course-provided
   utilities.
